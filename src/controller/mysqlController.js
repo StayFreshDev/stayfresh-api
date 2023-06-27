@@ -42,6 +42,28 @@ function getOneUser(id){
     })
 }
 
+function getAllEstablishements(){
+    return new Promise((resolve, reject)=>{
+        SQLRequest('SELECT * FROM `establishements`')
+        .then((rows)=>{
+            resolve(rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+function getOneEstablishement(id){
+    return new Promise((resolve, reject)=>{
+        SQLRequest('SELECT * FROM `establishements` WHERE users.id = ' + id)
+        .then((rows)=>{
+            resolve(rows)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
 function verifyAccount(email){
     return new Promise((resolve, reject)=>{
         SQLRequest('SELECT * FROM `users` WHERE `mail` = "' + email+ '"')
@@ -102,5 +124,7 @@ module.exports = {
     getAllUsers,
     getOneUser,
     verifyAccount,
-    registerUser
+    registerUser,
+    getAllEstablishements,
+    getOneEstablishement
 }

@@ -1,8 +1,8 @@
+const mysqlController = require('./mysqlController')
 
-
-function getAllUsers() {
+function getAllEstablishements() {
     return new Promise((resolve, reject) => {
-        mysqlController.getAllUsers()
+        mysqlController.getAllEstablishements()
             .then((rows) => {
                 resolve(rows)
             })
@@ -12,17 +12,17 @@ function getAllUsers() {
     })
 }
 
-function getOneUser(id) {
+function getOneEstablishement(id) {
     return new Promise((resolve, reject) => {
-        mysqlController.getOneUser(id)
-            .then((user) => {
-                if (user.length == 0) {
+        mysqlController.getOneEstablishement(id)
+            .then((establishement) => {
+                if (establishement.length == 0) {
                     resolve({
                         code: 404,
-                        error: 'User not found'
+                        error: 'Establishement not found'
                     })
                 }
-                resolve(user[0])
+                resolve(establishement[0])
             })
             .catch((err) => {
                 reject(err)
@@ -30,7 +30,7 @@ function getOneUser(id) {
     })
 }
 
-export default {
-    getOneUser,
-    getAllUsers
+module.exports = {
+    getAllEstablishements,
+    getOneEstablishement
 }

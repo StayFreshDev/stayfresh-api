@@ -52,7 +52,7 @@ router.post('/login', (req, res) => {
 	}
 })
 
-router.post('/register/user', (req, res) => {
+router.post('/register/', (req, res) => {
 	if (req.body.firstname && req.body.lastname && req.body.email && req.body.password && req.body.phone){
 		userController.registerUser(req.body.firstname, req.body.lastname, req.body.email, req.body.password, req.body.phone, req.body.roleId)
 			.then((objectResponse)=>{

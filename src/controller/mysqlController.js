@@ -44,7 +44,7 @@ function getOneUser(id){
 
 function getAllEstablishements(){
     return new Promise((resolve, reject)=>{
-        SQLRequest('SELECT * FROM `establishements`')
+        SQLRequest('SELECT establishements.id, establishements.siret, establishements.name, establishements.description, adresses.street_number, adresses.street_name, adresses.description AS adress_description, adresses.postal_code, adresses.city FROM `establishements` INNER JOIN `adresses` WHERE establishements.id = adresses.id')
         .then((rows)=>{
             resolve(rows)
         }).catch((err)=>{
@@ -55,7 +55,7 @@ function getAllEstablishements(){
 
 function getOneEstablishement(id){
     return new Promise((resolve, reject)=>{
-        SQLRequest('SELECT * FROM `establishements` WHERE users.id = ' + id)
+        SQLRequest('SELECT establishements.id, establishements.siret, establishements.name, establishements.description, adresses.street_number, adresses.street_name, adresses.description AS adress_description, adresses.postal_code, adresses.city FROM `establishements` INNER JOIN `adresses` WHERE establishements.id = adresses.id AND establishements.id = ' + id)
         .then((rows)=>{
             resolve(rows)
         }).catch((err)=>{

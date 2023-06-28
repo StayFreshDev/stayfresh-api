@@ -20,12 +20,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Import des routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var establishementsRouter = require('./routes/establishements');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/establishements', establishementsRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use((req, res, next)=>{
 	next(createError(404));
 });
 

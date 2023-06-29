@@ -42,6 +42,22 @@ app.use(function (err, req, res, next) {
 	res.render('error');
 });
 
+/**
+ * * Régler les problèmes de CORS
+ */
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
+	);
+	res.setHeader(
+		"Access-Control-Allow-Methods",
+		"GET, POST, PUT, DELETE, PATCH, OPTIONS"
+	);
+	next();
+});
+
 app.listen(8080, function () {
 	console.log('API started on : http://localhost:' + 8080);
 });

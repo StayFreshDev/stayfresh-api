@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var cors = require('cors')
 
 var app = express();
 
@@ -22,6 +23,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var establishementsRouter = require('./routes/establishements');
 
+app.use(cors())
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/establishements', establishementsRouter);
@@ -40,22 +42,6 @@ app.use(function (err, req, res, next) {
 	// render the error page
 	res.status(err.status || 500);
 	res.render('error');
-});
-
-/**
- * * Régler les problèmes de CORS
- */
-app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "*");
-	res.setHeader(
-		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
-	);
-	res.setHeader(
-		"Access-Control-Allow-Methods",
-		"GET, POST, PUT, DELETE, PATCH, OPTIONS"
-	);
-	next();
 });
 
 app.listen(8080, function () {

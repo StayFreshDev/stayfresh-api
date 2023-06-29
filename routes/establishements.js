@@ -14,7 +14,6 @@ router.get('/', function (req, res) {
                     return value;
                 })))
             });
-            console.log(establishementsArray)
 			res.status(200).send(establishementsArray);
 		}).catch((err) => {
 			res.status(500).send(err.message)

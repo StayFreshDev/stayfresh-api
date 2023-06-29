@@ -47,19 +47,21 @@ function getOneUser(id) {
 function logUser(email, password) {
     return new Promise((resolve, reject) => {
         mysqlController.verifyAccount(email)
-            .then((user) => {
+            .then((user) => {   
                 if (user.length == 1) {
-                    if (user[0].password == password) {
-                        resolve({
-                            error: false
-                        })
-                    } else {
-                        resolve({
-                            error: true,
-                            status: 400,
-                            message: 'Invalid email/password combinaison   '
-                        })
-                    }
+                    bcrypt.compare(password, user[0].password).then((isCorrect)=>{
+                        if (isCorrect) {
+                            resolve({
+                                error: false
+                            })
+                        } else {
+                            resolve({
+                                error: true,
+                                status: 400,
+                                message: 'Invalid email/password combinaison'
+                            })
+                        }
+                    })
                 } else {
                     resolve({
                         error: true,

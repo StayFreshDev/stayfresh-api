@@ -70,4 +70,22 @@ router.post('/register/', (req, res) => {
 	}
 })
 
+router.post('/register/establishement', (req, res) => {
+	if (req.body.firstname && req.body.lastname && req.body.email && req.body.password && req.body.phone){
+		userController.registerUser(req.body.firstname, req.body.lastname, req.body.email, req.body.password, req.body.phone, req.body.roleId)
+			.then((objectResponse)=>{
+				if (!objectResponse.error){
+					res.status(201).send()
+				}else{
+					res.status(objectResponse.status).send({error : true,  message : objectResponse.message})
+				}
+			})
+	}else{
+		res.status(400).send({
+			error : true,
+			message : 'Invalid parameters'
+		})
+	}
+})
+
 module.exports = router;

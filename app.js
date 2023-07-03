@@ -22,11 +22,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var establishementsRouter = require('./routes/establishements');
+var servicesRouter = require('./routes/services');
 
 app.use(cors())
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/establishements', establishementsRouter);
+app.use('/services', servicesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next)=>{

@@ -107,6 +107,17 @@ function registerUser(firstname, lastname, mail, password, roleId, phone){
     })
 }
 
+function getAllServices(){
+    return new Promise((resolve)=>{
+        SQLRequest('SELECT id,name,description FROM `services`')
+            .then((rows)=>{
+                resolve(rows)
+            }).catch((err)=>{
+                reject(err)
+            })
+    })
+}
+
 function doUserExistInDb(email){
     return new Promise((resolve)=>{
         SQLRequest('SELECT * FROM `users` WHERE mail = "' + email + '"')
@@ -126,5 +137,6 @@ module.exports = {
     verifyAccount,
     registerUser,
     getAllEstablishements,
-    getOneEstablishement
+    getOneEstablishement, 
+    getAllServices
 }

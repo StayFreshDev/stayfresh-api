@@ -86,11 +86,12 @@ function registerUser(firstname, lastname, mail, password, roleId, phone){
                         message : "User already exist with email '" + mail + "'"
                     })
                 }else{
-                    SQLRequest('INSERT INTO `users` (`firstname`, `lastname`, `mail`, `password`, `role_id`, `phone`) VALUES ("' + firstname + '","' + lastname + '","' + mail + '","' + password + '",' + roleId + ',"' + phone + '")')
+                    SQLRequest('INSERT INTO `users` (`firstname`, `lastname`, `mail`, `password`, `role_id`, `phone`) VALUES ("' + firstname + '","' + lastname + '","' + mail + '","' + password + '",' + roleId + ',"' + phone + '");')
                     .then((request)=>{
                         if (request.affectedRows){
                             resolve({
-                                error : false
+                                error : false,
+                                userId : parseInt(request.insertId)
                             })
                         }else{
                             resolve({

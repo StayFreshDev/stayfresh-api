@@ -3,16 +3,13 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 
-const token = jwt.sign(
-    {
-        user_id: 1, 
-        email: "antoineg3802@gmail.com" 
-    },
-    process.env.SHA_KEY,
-    {
-        expiresIn: "24h",
-    }
-);
+// jwt.verify(token, process.env.SHA_KEY,(err, decoded)=> {
+//     if (err) {
+//         return res.status(403).json({ message: 'Invalid JWT token' });
+//     }else{
+//         console.log(decoded)
+//     }
+// })
 
 function getAllUsers() {
     return new Promise((resolve, reject) => {
@@ -47,7 +44,7 @@ function getOneUser(id) {
 function logUser(email, password) {
     return new Promise((resolve, reject) => {
         mysqlController.verifyAccount(email)
-            .then((user) => {   
+            .then((user) => {
                 if (user.length == 1) {
                     bcrypt.compare(password, user[0].password).then((isCorrect)=>{
                         if (isCorrect) {
@@ -81,7 +78,13 @@ function registerUser(firstname, lastname, mail, password, phone) {
             .then((hashPswd) => {
                 mysqlController.registerUser(firstname, lastname, mail, hashPswd, 2, phone)
                     .then((res) => {
-                        resolve(res)
+                        if (!resolve.error){
+                            res.token = createToken(res.userId, 2)
+                            console.log(res)
+                            resolve(res)
+                        }else{
+                            resolve(res)
+                        }
                     })
             })
             .catch((err) => {
@@ -92,6 +95,21 @@ function registerUser(firstname, lastname, mail, password, phone) {
 
 function registerAdress(streetNumber, streetName, description, postalCode, city) {
     console.log(streetNumber, streetName, description, postalCode, city)
+}
+
+function createToken(userId, permissionLevel){
+    const token = jwt.sign(
+        {
+            user_id: userId, 
+            role_id: permissionLevel 
+        },
+        process.env.SHA_KEY,
+        {
+            expiresIn: "72h",
+        }
+    );
+    
+    return token
 }
 
 module.exports = {

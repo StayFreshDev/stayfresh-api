@@ -27,7 +27,7 @@ var servicesRouter = require('./routes/services');
 app.use(cors())
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/establishements', establishementsRouter);
+app.use('/establishments', establishementsRouter);
 app.use('/services', servicesRouter);
 
 // catch 404 and forward to error handler

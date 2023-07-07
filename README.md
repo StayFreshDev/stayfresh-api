@@ -24,4 +24,11 @@ Pour ce projet nous vous mettons deux commandes à disposition :
 - `npm start` : cette commande permet de le fichier `app.js` et qui fera tourner l'API.
 - `npm run start-dev` : cette commande permet de lancer l'API comme la commande précédente mais en utilisant la librairie npm "nodemon" qui permet de redémarrer le serveur à chque fois qu'une mise à jour qu'un fichier Javascript a été modifié.
 
-- ### Et voilà vous êtes prêt à développer ! 🎉🎉
+## Variables d'environnement
+Vous devrez au préalable remplir les variables d'environnement nécessaire au bon fonctionnement de l'application :
+- `APP_HOST` : localisation (URL) de la BDD
+- `APP_USER` && `APP_PASSWORD` : utilisateur et mot de passe de la BDD
+- `APP_DB` : nom de la BDD
+- `SHA_KEY` : clé de hachage pour les JWT (Json Web Token)
+
+### Et voilà vous êtes prêt à développer ! 🎉🎉

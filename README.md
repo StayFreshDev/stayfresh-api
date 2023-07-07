@@ -11,6 +11,7 @@ Pour ce faire, rien de plus simple :
 ```bash
 npm install -g npm
 ```
+- Puis effectuez la commande `npm i` afin d'installer les packages requis pour le fonctionnement de l'application
 
 ## Setup de la Base De Données (BDD)
 - Pour pouvoir faire tourner ce projet, il faudra disposer d'un instance de MariaDB et phpmyadmin (Wamp64, Xamp, DockerContainer, etc...)

@@ -91,4 +91,8 @@ router.post('/register/establishement', (req, res) => {
 	}
 })
 
+router.patch('/modify', (req, res)=>{
+	
+})
+
 module.exports = router;

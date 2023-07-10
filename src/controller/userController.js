@@ -112,9 +112,14 @@ function createToken(userId, permissionLevel){
     return token
 }
 
+function registerEstablishement(){
+    
+}
+
 module.exports = {
     getAllUsers,
     getOneUser,
     registerUser,
-    logUser
+    logUser,
+    registerEstablishement
 }

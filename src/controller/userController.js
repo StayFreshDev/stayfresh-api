@@ -116,10 +116,20 @@ function registerEstablishement(){
     
 }
 
+function updateUser(userId, body){
+    return new Promise((resolve)=>{
+        mysqlController.updateUser(userId, body)
+        .then(response=>{
+            resolve(response)
+        })
+    })
+}
+
 module.exports = {
     getAllUsers,
     getOneUser,
     registerUser,
     logUser,
-    registerEstablishement
+    registerEstablishement,
+    updateUser
 }

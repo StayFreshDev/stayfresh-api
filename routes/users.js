@@ -91,8 +91,14 @@ router.post('/register/establishement', (req, res) => {
 	}
 })
 
-router.patch('/modify', (req, res)=>{
-	
+router.patch('/modify/:userId', (req, res)=>{
+	let userId = req.params.userId
+	const updateData = req.body;
+
+	userController.updateUser(userId, updateData)
+	.then(result=>{
+		res.send(result)
+	})
 })
 
 module.exports = router;

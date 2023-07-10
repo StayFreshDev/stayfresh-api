@@ -132,6 +132,33 @@ function doUserExistInDb(email){
     })
 }
 
+function doUserExistInDbById(userId){
+    return new Promise((resolve)=>{
+        SQLRequest('SELECT * FROM `users` WHERE id = "' + userId + '"')
+            .then((query)=>{
+                if (query.length == 0){
+                    resolve(false)
+                }else{
+                    resolve(true)
+                }
+            })
+    })
+}
+
+function updateUser(user_id, body){
+    return new Promise(async(resolve)=>{
+        if (await doUserExistInDbById(user_id)){
+            resolve("user exist")
+        }else {
+            resolve({
+                error: true,
+                status: 404,
+                message: 'User not found'
+            })
+        }
+    })
+}
+
 module.exports = {
     getAllUsers,
     getOneUser,
@@ -139,5 +166,6 @@ module.exports = {
     registerUser,
     getAllEstablishements,
     getOneEstablishement, 
-    getAllServices
+    getAllServices,
+    updateUser
 }

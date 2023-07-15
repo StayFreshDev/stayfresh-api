@@ -44,7 +44,21 @@ function getOneUser(id){
 
 function getAllEstablishements(){
     return new Promise((resolve, reject)=>{
-        SQLRequest('SELECT establishements.id, establishements.siret, establishements.name, establishements.description, adresses.street_number, adresses.street_name, adresses.description AS adress_description, adresses.postal_code, adresses.city FROM `establishements` INNER JOIN `adresses` WHERE establishements.id = adresses.id')
+        SQLRequest(`
+            SELECT
+                e.id AS id,
+                e.name AS establishment_name,
+                e.description AS establishment_description,
+                CONCAT(a.street_number, ' ', a.street_name, ' ', a.postal_code, ' ', a.city) AS establishment_address,
+                GROUP_CONCAT(s.name SEPARATOR ', ') AS services
+            FROM
+                establishements e
+                INNER JOIN adresses a ON e.adress_id = a.id
+                LEFT JOIN services_establishements se ON e.id = se.establishement_id
+                LEFT JOIN services s ON se.service_id = s.id
+            GROUP BY
+                e.id;
+        `)
         .then((rows)=>{
             resolve(rows)
         }).catch((err)=>{
@@ -55,7 +69,21 @@ function getAllEstablishements(){
 
 function getOneEstablishement(id){
     return new Promise((resolve, reject)=>{
-        SQLRequest('SELECT establishements.id, establishements.siret, establishements.name, establishements.description, adresses.street_number, adresses.street_name, adresses.description AS adress_description, adresses.postal_code, adresses.city FROM `establishements` INNER JOIN `adresses` WHERE establishements.id = adresses.id AND establishements.id = ' + id)
+        SQLRequest(`
+            SELECT
+                e.name AS establishment_name,
+                e.siret,
+                e.description AS establishment_description,
+                CONCAT(a.street_number, ' ', a.street_name, ' ', a.postal_code, ' ', a.city) AS establishment_address,
+                GROUP_CONCAT(s.name SEPARATOR ', ') AS services
+            FROM
+                establishements e
+                INNER JOIN adresses a ON e.adress_id = a.id
+                INNER JOIN services_establishements se ON e.id = se.establishement_id
+                INNER JOIN services s ON se.service_id = s.id
+            WHERE
+                e.id = ${id}
+        `)
         .then((rows)=>{
             resolve(rows)
         }).catch((err)=>{
@@ -148,7 +176,14 @@ function doUserExistInDbById(userId){
 function updateUser(user_id, body){
     return new Promise(async(resolve)=>{
         if (await doUserExistInDbById(user_id)){
-            resolve("user exist")
+            SQLRequest('UPDATE table SET ' + body + ' WHERE id=' + user_id)
+            .then((query)=>{
+                if (query.affectedRows == 0){
+                    resolve(false)
+                }else{
+                    resolve(true)
+                }
+            })
         }else {
             resolve({
                 error: true,

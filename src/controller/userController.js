@@ -49,7 +49,7 @@ function logUser(email, password) {
                     bcrypt.compare(password, user[0].password).then((isCorrect)=>{
                         if (isCorrect) {
                             resolve({
-                                token: createToken(user.id, user.role_id),
+                                token: createToken(user[0].id, user[0].role_id),
                                 maxAge: 259560000
                             })
                         } else {
@@ -99,6 +99,7 @@ function registerAdress(streetNumber, streetName, description, postalCode, city)
 }
 
 function createToken(userId, permissionLevel){
+    console.log(userId, permissionLevel)
     const token = jwt.sign(
         {
             user_id: userId, 
@@ -109,7 +110,7 @@ function createToken(userId, permissionLevel){
             expiresIn: "72h",
         }
     );
-    
+
     return token
 }
 
@@ -126,11 +127,27 @@ function updateUser(userId, body){
     })
 }
 
+function getCurrentUser(token){
+    return new Promise((resolve)=>{
+        jwt.verify(token, process.env.SHA_KEY,(err, decoded)=> {
+            if (err) {
+                resolve({error: true, message: 'Invalid JWT token' });
+            }else{
+                mysqlController.getOneUser(decoded.user_id)
+                .then((response)=>{
+                    resolve(response[0])
+                })
+            }
+        })
+    })
+}
+
 module.exports = {
     getAllUsers,
     getOneUser,
     registerUser,
     logUser,
     registerEstablishement,
-    updateUser
+    updateUser,
+    getCurrentUser
 }

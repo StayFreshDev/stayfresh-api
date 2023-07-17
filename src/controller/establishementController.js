@@ -4,18 +4,36 @@ function getAllEstablishements() {
     return new Promise((resolve, reject) => {
         mysqlController.getAllEstablishements()
             .then((rows) => {
-                const promises = rows.map((key) => mysqlController.getServiceById(key.services));
+                const promises = rows.map((key) => {
+                    if (key.services != null) {
+                        const services = key.services.split(',');
+                        console.log(services);
+                        if (services.length > 1) {
+                            const servicePromises = services.map((service) => mysqlController.getServiceById(service));
+                            return Promise.all(servicePromises);
+                        } else {
+                            return mysqlController.getServiceById(key.services);
+                        }
+                    }
+                });
 
                 Promise.all(promises)
                     .then((serviceResponses) => {
-                        const arrAllAppointments = rows.map((key, index) => {
-                            // Vérifier si la réponse de mysqlController.getServiceById est false
-                            const service = serviceResponses[index] || key.services;
+                        let responseIndex = 0;
+                        const arrAllAppointments = rows.map((key) => {
+                            if (key.services != null) {
+                                const services = key.services.split(',');
+                                const mappedServices = services.map((service) => {
+                                    const currentResponse = serviceResponses[responseIndex++];
+                                    return currentResponse || service;
+                                });
 
-                            return {
-                                ...key,
-                                services: service
-                            };
+                                return {
+                                    ...key,
+                                    services: mappedServices
+                                };
+                            }
+                            return key;
                         });
 
                         resolve(arrAllAppointments);

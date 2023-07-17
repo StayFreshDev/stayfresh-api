@@ -76,7 +76,6 @@ router.post('/register/', (req, res) => {
 	if (req.body.firstname && req.body.lastname && req.body.email && req.body.password && req.body.phone){
 		userController.registerUser(req.body.firstname, req.body.lastname, req.body.email, req.body.password, req.body.phone, req.body.roleId)
 			.then((objectResponse)=>{
-				console.log(objectResponse)
 				if (!objectResponse.error){
 					res.status(201).send({token : objectResponse.token, maxAge: 259560000})
 				}else{

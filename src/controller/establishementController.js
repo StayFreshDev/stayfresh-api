@@ -4,6 +4,10 @@ function getAllEstablishements() {
     return new Promise((resolve, reject) => {
         mysqlController.getAllEstablishements()
             .then((rows) => {
+                mysqlController.getServiceByName('Coiffure')
+                .then((service) => {
+                    console.log(service)
+                })
                 resolve(rows)
             })
             .catch((err) => {
@@ -16,6 +20,10 @@ function getOneEstablishement(id) {
     return new Promise((resolve, reject) => {
         mysqlController.getOneEstablishement(id)
             .then((establishement) => {
+                mysqlController.getServiceByName('Coiffure')
+                .then((service) => {
+                    console.log(service)
+                })
                 if (establishement.length == 0) {
                     resolve({
                         code: 404,

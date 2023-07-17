@@ -194,6 +194,24 @@ function updateUser(user_id, body){
     })
 }
 
+function getServicesFromNameString(serviceNames){
+
+}
+
+function getServiceByName(name){
+    name = name.toLowerCase()
+    return new Promise((resolve)=>{
+        SQLRequest('SELECT * FROM services WHERE name = "' + name + '"',)
+            .then((query)=>{
+                if (query[0]){
+                    resolve(query[0])
+                }else{
+                    resolve(false)
+                }
+            })
+    })
+}
+
 module.exports = {
     getAllUsers,
     getOneUser,
@@ -202,5 +220,7 @@ module.exports = {
     getAllEstablishements,
     getOneEstablishement, 
     getAllServices,
-    updateUser
+    updateUser,
+    getServicesFromNameString,
+    getServiceByName
 }

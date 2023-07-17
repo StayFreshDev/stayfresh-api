@@ -60,8 +60,9 @@ router.post('/login', (req, res) => {
 			.then((responseObject) => {
 				if (responseObject.error){
 					res.status(responseObject.status).send({error : true, message : responseObject.message})
+				}else{
+					res.status(200).send(responseObject)
 				}
-				res.status(200).send(responseObject)
 			})
 	}else{
 		res.status(400).send({

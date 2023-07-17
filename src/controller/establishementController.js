@@ -24,7 +24,6 @@ function getAllEstablishements() {
                         console.error(error);
                         reject(error);
                     });
-                // resolve(rows)
             })
             .catch((err) => {
                 reject(err)

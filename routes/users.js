@@ -39,7 +39,7 @@ router.post('/login', (req, res) => {
 				if (responseObject.error){
 					res.status(responseObject.status).send({error : true, message : responseObject.message})
 				}
-				res.status(200).send()
+				res.status(200).send(responseObject)
 			})
 			.catch((err) => {
 				res.status(500).send(err.message)
@@ -58,9 +58,6 @@ router.post('/register/', (req, res) => {
 			.then((objectResponse)=>{
 				console.log(objectResponse)
 				if (!objectResponse.error){
-					res.cookie('c_jwt', objectResponse.token, { 
-						maxAge: 259560000,
-					});
 					res.status(201).send({token : objectResponse.token, maxAge: 259560000})
 				}else{
 					res.status(objectResponse.status).send({error : true,  message : objectResponse.message})

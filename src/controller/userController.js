@@ -49,7 +49,8 @@ function logUser(email, password) {
                     bcrypt.compare(password, user[0].password).then((isCorrect)=>{
                         if (isCorrect) {
                             resolve({
-                                error: false
+                                token: createToken(user.id, user.role_id),
+                                maxAge: 259560000
                             })
                         } else {
                             resolve({

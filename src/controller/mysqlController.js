@@ -1,3 +1,4 @@
+const { SqlError } = require('mariadb');
 const mysqlModel = require('../models/mysqlModel');
 
 function SQLRequest(query) {
@@ -268,6 +269,43 @@ function createAppointement(serviceId, userId, date, durate){
     })
 }
 
+function deleteAppointement(appointementId, userId) {
+    return new Promise((resolve) => {
+        doAppointementExist(appointementId)
+        .then((exist)=>{
+            if (exist){
+                if (exist[0].user_id == userId){
+                    SQLRequest('DELETE FROM `appointments` WHERE id = ' + appointementId)
+                    .then((query) => {
+                        if (query.affectedRows != 0){
+                            resolve(true)
+                        }else{
+                            resolve(false)
+                        }
+                    })
+                }else{
+                    resolve({error: true,status: 401, message:'Not authorized to delete'})
+                }
+            }else{
+                resolve({error: true,status: 404, message:'Appointement not found'})
+            }
+        })
+    })
+}
+
+function doAppointementExist(appointementId) {
+    return new Promise((resolve) => {
+        SQLRequest('SELECT * FROM `appointments` WHERE id = ' + appointementId)
+        .then((query)=>{
+            if (query.length!= 0){
+                resolve(query)
+            }else{
+                resolve(false)
+            }
+        })
+    })
+}
+
 module.exports = {
     getAllUsers,
     getOneUser,
@@ -281,5 +319,6 @@ module.exports = {
     getServiceByName,
     getAppoitmentsFromUserId,
     createAppointement,
-    getServiceById
+    getServiceById,
+    deleteAppointement
 }

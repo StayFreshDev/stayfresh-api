@@ -1,24 +1,26 @@
 const mysqlController = require('./mysqlController')
+const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
-function createAppointement(body){
-    return new Promise((resolve)=>{
+function createAppointement(body) {
+    return new Promise((resolve) => {
         let date = new Date(body.date)
-        if( date != 'Invalid Date'){
+        if (date != 'Invalid Date') {
             mysqlController.createAppointement(body.serviceId, body.userId, dateJSToSQLDate(new Date(body.date)), body.durate)
-                .then((results)=>{
+                .then((results) => {
                     resolve(results)
                 })
-        }else{
+        } else {
             resolve({
                 error: true,
                 status: 400,
-                message : 'Invalid Date'
+                message: 'Invalid Date'
             })
         }
     })
 }
 
-function dateJSToSQLDate(date){
+function dateJSToSQLDate(date) {
     // Obtenir les composants de la date
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -33,7 +35,23 @@ function dateJSToSQLDate(date){
     return sqlFormattedDate;
 }
 
+function deleteAppointement(appointementId, token) {
+    return new Promise((resolve) => {
+        jwt.verify(token, process.env.SHA_KEY, (err, decoded) => {
+            if (err) {
+                resolve({ error: true, message: 'Invalid JWT token' });
+            } else {
+                mysqlController.deleteAppointement(appointementId, decoded.user_id)
+                    .then((response) => {
+                        resolve(response)
+                    })
+            }
+        })
+    })
+}
+
 
 module.exports = {
-    createAppointement
+    createAppointement,
+    deleteAppointement
 }

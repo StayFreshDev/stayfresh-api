@@ -50,6 +50,7 @@ function getAllEstablishements() {
                 e.id AS id,
                 e.name AS establishment_name,
                 e.description AS establishment_description,
+                e.image,
                 e.siret AS siret,
                 CONCAT(a.street_number, ' ', a.street_name, ' ', a.postal_code, ' ', a.city) AS establishment_address,
                 GROUP_CONCAT(s.id SEPARATOR ',') AS services
@@ -75,6 +76,7 @@ function getOneEstablishement(id) {
             SELECT
                 e.id,
                 e.name AS establishment_name,
+                e.image,
                 e.siret,
                 e.description AS establishment_description,
                 CONCAT(a.street_number, ' ', a.street_name, ' ', a.postal_code, ' ', a.city) AS establishment_address,

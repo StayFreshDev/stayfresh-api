@@ -80,8 +80,8 @@ function getOneEstablishement(id) {
             FROM
                 establishements e
                 INNER JOIN adresses a ON e.adress_id = a.id
-                INNER JOIN services_establishements se ON e.id = se.establishement_id
-                INNER JOIN services s ON se.service_id = s.id
+                LEFT JOIN services_establishements se ON e.id = se.establishement_id
+                LEFT JOIN services s ON se.service_id = s.id
             WHERE
                 e.id = ${id}
         `)

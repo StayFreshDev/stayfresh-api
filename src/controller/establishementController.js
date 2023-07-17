@@ -53,7 +53,6 @@ function getOneEstablishement(id) {
     return new Promise((resolve, reject) => {
         mysqlController.getOneEstablishement(id)
             .then((establishement) => {
-                console.log(establishement[0])
                 if (establishement.length == 0) {
                     resolve({
                         code: 404,

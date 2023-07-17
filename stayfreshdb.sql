@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 07 juil. 2023 à 17:19
+-- Généré le : lun. 17 juil. 2023 à 23:39
 -- Version du serveur :  10.11.2-MariaDB
 -- Version de PHP : 7.3.21
 
@@ -131,7 +131,20 @@ CREATE TABLE IF NOT EXISTS `appointments` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`,`service_id`),
   KEY `service_id` (`service_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `date`, `durate`, `user_id`, `service_id`) VALUES
+(3, '2023-07-30 16:30:00', 30, 61, 2),
+(4, '2023-07-19 16:30:00', 30, 87, 1),
+(5, '2023-07-19 16:30:00', 30, 87, 1),
+(6, '2023-07-19 16:30:00', 30, 87, 1),
+(7, '2023-07-19 16:30:00', 30, 87, 1),
+(8, '2023-07-19 16:30:00', 30, 87, 1),
+(9, '2023-06-07 14:30:00', 30, 87, 1);
 
 -- --------------------------------------------------------
 
@@ -146,6 +159,7 @@ CREATE TABLE IF NOT EXISTS `establishements` (
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `adress_id` int(11) NOT NULL,
+  `image` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `adress_id` (`adress_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -154,37 +168,37 @@ CREATE TABLE IF NOT EXISTS `establishements` (
 -- Déchargement des données de la table `establishements`
 --
 
-INSERT INTO `establishements` (`id`, `siret`, `name`, `description`, `adress_id`) VALUES
-(1, 30537836922649, 'Kiehn - Welch', 'Reprehenderit alias iure accusantium necessitatibus nulla.', 1),
-(2, 92679354682959, 'Quitzon, Kuhlman and Mitchell', 'Dolores iusto culpa magnam odio nostrum architecto nisi commodi.', 2),
-(3, 71551233529442, 'Watsica, Heller and Botsford', 'Quam aut debitis quis quasi eum tempore.', 3),
-(4, 73023245497295, 'Hamill Group', 'Itaque beatae voluptatem suscipit ullam pariatur aperiam quidem recusandae maiores.', 4),
-(5, 41028313725965, 'Zulauf, Conroy and Hilll', 'Voluptatum delectus sapiente et fugit in nemo molestiae quibusdam quae.', 5),
-(6, 95826916857225, 'Tromp Group', 'Accusantium repellat ex aut id libero occaecati perspiciatis voluptas repudiandae.', 6),
-(7, 80286104891270, 'Ebert Group', 'Asperiores eum perferendis.', 7),
-(8, 76685594668729, 'Schowalter LLC', 'Hic ea quasi beatae enim illo velit tenetur dicta veritatis.', 8),
-(9, 83467469139516, 'Stehr, McCullough and Wunsch', 'Fugiat facere dolores quo quibusdam corrupti animi nostrum.', 9),
-(10, 73338592732756, 'Marquardt, Barton and Stoltenberg', 'Voluptatem unde ad quos labore.', 10),
-(11, 79476919245081, 'Goodwin, Quigley and Kirlin', 'Sit mollitia voluptatum possimus.', 11),
-(12, 71638612649536, 'Grant Group', 'Perspiciatis assumenda ex molestias facere optio tempore vitae minima.', 12),
-(13, 37484005037533, 'Bergstrom, Swift and Sawayn', 'Accusantium porro aperiam quisquam dolor sit.', 13),
-(14, 82118242281628, 'Green LLC', 'Sint dolor repellat optio dolorem cumque architecto.', 14),
-(15, 33754731072264, 'Murray Inc', 'Minima quis maxime aliquid vel iure neque deserunt recusandae similique.', 15),
-(16, 46365156712811, 'Wiegand, Carter and Littel', 'Cupiditate quasi et doloribus minima enim quos iste molestiae.', 16),
-(17, 63548205707503, 'Schneider - Armstrong', 'Incidunt laudantium ipsa nemo.', 17),
-(18, 36612734166548, 'Langworth, Krajcik and Zemlak', 'Adipisci itaque aliquam ab dolor quasi incidunt asperiores in.', 18),
-(19, 92154883293244, 'Strosin, Kub and Bartell', 'Facilis optio numquam praesentium at reprehenderit fugiat omnis.', 19),
-(20, 55588677520079, 'Metz - Casper', 'Maiores fugit eveniet mollitia.', 20),
-(21, 46778331481609, 'Becker and Sons', 'Commodi voluptates laudantium neque.', 21),
-(22, 14965148096373, 'D\'Amore - Turner', 'Similique explicabo facilis optio quas corrupti asperiores hic.', 22),
-(23, 70980356873722, 'Kunde - Upton', 'Facilis distinctio ad optio distinctio quas neque adipisci velit ad.', 23),
-(24, 65092016083671, 'Nader, Prohaska and Zieme', 'Perferendis architecto magni atque iste doloribus dolor.', 24),
-(25, 68607613317309, 'Quigley, Tillman and Armstrong', 'Enim dolores accusantium illo eligendi incidunt at animi.', 25),
-(26, 36474977763156, 'Beer - Borer', 'Amet similique repudiandae quod beatae.', 26),
-(27, 67832362562914, 'Kautzer LLC', 'Laborum illo aliquid odio itaque sed laborum ex quos temporibus.', 27),
-(28, 40139688942688, 'Nolan, Stiedemann and Goldner', 'Aperiam cum dignissimos maiores vero quidem fugit dolore unde.', 28),
-(29, 70968569351222, 'Klocko - Koepp', 'Magni sunt necessitatibus odit.', 29),
-(30, 11394764767526, 'Kunze - Schinner', 'Ex similique expedita facilis eum mollitia esse blanditiis.', 30);
+INSERT INTO `establishements` (`id`, `siret`, `name`, `description`, `adress_id`, `image`) VALUES
+(1, 30537836922649, 'Kiehn - Welch', 'Reprehenderit alias iure accusantium necessitatibus nulla.', 1, NULL),
+(2, 92679354682959, 'Quitzon, Kuhlman and Mitchell', 'Dolores iusto culpa magnam odio nostrum architecto nisi commodi.', 2, NULL),
+(3, 71551233529442, 'Watsica, Heller and Botsford', 'Quam aut debitis quis quasi eum tempore.', 3, NULL),
+(4, 73023245497295, 'Hamill Group', 'Itaque beatae voluptatem suscipit ullam pariatur aperiam quidem recusandae maiores.', 4, NULL),
+(5, 41028313725965, 'Zulauf, Conroy and Hilll', 'Voluptatum delectus sapiente et fugit in nemo molestiae quibusdam quae.', 5, NULL),
+(6, 95826916857225, 'Tromp Group', 'Accusantium repellat ex aut id libero occaecati perspiciatis voluptas repudiandae.', 6, NULL),
+(7, 80286104891270, 'Ebert Group', 'Asperiores eum perferendis.', 7, NULL),
+(8, 76685594668729, 'Schowalter LLC', 'Hic ea quasi beatae enim illo velit tenetur dicta veritatis.', 8, NULL),
+(9, 83467469139516, 'Stehr, McCullough and Wunsch', 'Fugiat facere dolores quo quibusdam corrupti animi nostrum.', 9, NULL),
+(10, 73338592732756, 'Marquardt, Barton and Stoltenberg', 'Voluptatem unde ad quos labore.', 10, NULL),
+(11, 79476919245081, 'Goodwin, Quigley and Kirlin', 'Sit mollitia voluptatum possimus.', 11, NULL),
+(12, 71638612649536, 'Grant Group', 'Perspiciatis assumenda ex molestias facere optio tempore vitae minima.', 12, NULL),
+(13, 37484005037533, 'Bergstrom, Swift and Sawayn', 'Accusantium porro aperiam quisquam dolor sit.', 13, NULL),
+(14, 82118242281628, 'Green LLC', 'Sint dolor repellat optio dolorem cumque architecto.', 14, NULL),
+(15, 33754731072264, 'Murray Inc', 'Minima quis maxime aliquid vel iure neque deserunt recusandae similique.', 15, NULL),
+(16, 46365156712811, 'Wiegand, Carter and Littel', 'Cupiditate quasi et doloribus minima enim quos iste molestiae.', 16, NULL),
+(17, 63548205707503, 'Schneider - Armstrong', 'Incidunt laudantium ipsa nemo.', 17, NULL),
+(18, 36612734166548, 'Langworth, Krajcik and Zemlak', 'Adipisci itaque aliquam ab dolor quasi incidunt asperiores in.', 18, NULL),
+(19, 92154883293244, 'Strosin, Kub and Bartell', 'Facilis optio numquam praesentium at reprehenderit fugiat omnis.', 19, NULL),
+(20, 55588677520079, 'Metz - Casper', 'Maiores fugit eveniet mollitia.', 20, NULL),
+(21, 46778331481609, 'Becker and Sons', 'Commodi voluptates laudantium neque.', 21, NULL),
+(22, 14965148096373, 'D\'Amore - Turner', 'Similique explicabo facilis optio quas corrupti asperiores hic.', 22, NULL),
+(23, 70980356873722, 'Kunde - Upton', 'Facilis distinctio ad optio distinctio quas neque adipisci velit ad.', 23, NULL),
+(24, 65092016083671, 'Nader, Prohaska and Zieme', 'Perferendis architecto magni atque iste doloribus dolor.', 24, NULL),
+(25, 68607613317309, 'Quigley, Tillman and Armstrong', 'Enim dolores accusantium illo eligendi incidunt at animi.', 25, NULL),
+(26, 36474977763156, 'Beer - Borer', 'Amet similique repudiandae quod beatae.', 26, NULL),
+(27, 67832362562914, 'Kautzer LLC', 'Laborum illo aliquid odio itaque sed laborum ex quos temporibus.', 27, NULL),
+(28, 40139688942688, 'Nolan, Stiedemann and Goldner', 'Aperiam cum dignissimos maiores vero quidem fugit dolore unde.', 28, NULL),
+(29, 70968569351222, 'Klocko - Koepp', 'Magni sunt necessitatibus odit.', 29, NULL),
+(30, 11394764767526, 'Kunze - Schinner', 'Ex similique expedita facilis eum mollitia esse blanditiis.', 30, NULL);
 
 -- --------------------------------------------------------
 
@@ -237,13 +251,16 @@ CREATE TABLE IF NOT EXISTS `services` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `salary_count` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `services` (`id`, `name`, `description`, `salary_count`) VALUES
-(1, 'Coiffure', 'Se faire couper les cheveux', 0),
-(2, 'Esthétique', 'Rendez-vous frais', 0);
+--
+-- Déchargement des données de la table `services`
+--
+
+INSERT INTO `services` (`id`, `name`, `description`) VALUES
+(1, 'Coiffure', 'Se faire couper les cheveux'),
+(2, 'Esthétique', 'Rendez-vous frais');
 
 -- --------------------------------------------------------
 
@@ -258,6 +275,14 @@ CREATE TABLE IF NOT EXISTS `services_establishements` (
   UNIQUE KEY `service_is` (`service_id`,`establishement_id`),
   KEY `establishement_id` (`establishement_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `services_establishements`
+--
+
+INSERT INTO `services_establishements` (`service_id`, `establishement_id`) VALUES
+(1, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -276,8 +301,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `phone` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `role_id` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `users`
@@ -339,7 +363,13 @@ INSERT INTO `users` (`id`, `firstname`, `lastname`, `mail`, `password`, `role_id
 (83, 'antoine', 'GUERIN', 'antoineg3802@gmail.com21', '$2b$10$9km2WkRgcCNriTL1HlB8TOhxLIOe/8BAhP3PYGnpEId5yCK5/KjWC', 2, '0652115516'),
 (84, 'antoine', 'GUERIN', 'antoineg3802@gmail.com212', '$2b$10$/.V8XWf7GAdYECPj1P7No.jm.euJ/dssbiIgJb17Ubv8w4/LtHH0m', 2, '0652115516'),
 (85, 'antoine', 'GUERIN', 'antoineg3802@gmail.com2121', '$2b$10$AotUhRINZx0oKmqA2l7M9.YOA46o8WdD8XVjpNtIrmMdE2LFczl3.', 2, '0652115516'),
-(86, 'antoine', 'GUERIN', 'antoineg3802@gmail.com21212', '$2b$10$5jNvP7ulE/YGQ/uzumVOIOlvcCc9jKKsvSxcQ0iCAiSP7AMfH/Y0y', 2, '0652115516');
+(86, 'antoine', 'GUERIN', 'antoineg3802@gmail.com21212', '$2b$10$5jNvP7ulE/YGQ/uzumVOIOlvcCc9jKKsvSxcQ0iCAiSP7AMfH/Y0y', 2, '0652115516'),
+(87, 'Antoine', 'GUERIN', 'tutu@gmail.com', '$2b$10$g7WDKs0fj4bC58co.47Gwusm7WYDn/IC3fAmVaVRPbaHZxNUEcPPW', 2, '0652115516'),
+(88, 'Antoine', 'GUERIN', 'tutu@gmail.comm', '$2b$10$ksBhRe8KQ9xMgT4QOvU0PONIsmnuyFacdVi/DMcStmQRBblrPVAiC', 2, '0652115516');
+
+--
+-- Contraintes pour les tables déchargées
+--
 
 --
 -- Contraintes pour la table `appointments`

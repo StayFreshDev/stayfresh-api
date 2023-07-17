@@ -26,11 +26,6 @@ app.use('/users', usersRouter);
 app.use('/establishments', establishementsRouter);
 app.use('/services', servicesRouter);
 
-// catch 404 and forward to error handler
-app.use((req, res, next)=>{
-	next(createError(404));
-});
-
 // error handler
 app.use(function (err, req, res, next) {
 	// set locals, only providing error in development
@@ -42,7 +37,7 @@ app.use(function (err, req, res, next) {
 	res.render('error');
 });
 
-app.listen("16.171.162.115", 8080, function () {
+app.listen(8080, function () {
 	console.log('API started on : http://localhost:' + 8080);
 });
 

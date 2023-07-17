@@ -49,8 +49,9 @@ function getAllEstablishements() {
                 e.id AS id,
                 e.name AS establishment_name,
                 e.description AS establishment_description,
+                e.siret AS siret,
                 CONCAT(a.street_number, ' ', a.street_name, ' ', a.postal_code, ' ', a.city) AS establishment_address,
-                GROUP_CONCAT(s.name SEPARATOR ', ') AS services
+                GROUP_CONCAT(s.id SEPARATOR ',') AS services
             FROM
                 establishements e
                 INNER JOIN adresses a ON e.adress_id = a.id
@@ -75,7 +76,7 @@ function getOneEstablishement(id) {
                 e.siret,
                 e.description AS establishment_description,
                 CONCAT(a.street_number, ' ', a.street_name, ' ', a.postal_code, ' ', a.city) AS establishment_address,
-                GROUP_CONCAT(s.name SEPARATOR ', ') AS services
+                GROUP_CONCAT(s.id SEPARATOR ',') AS services
             FROM
                 establishements e
                 INNER JOIN adresses a ON e.adress_id = a.id
@@ -213,7 +214,6 @@ function getServiceByName(name) {
 }
 
 function getServiceById(serviceId) {
-    console.log(serviceId)
     return new Promise((resolve) => {
         SQLRequest('SELECT * FROM services WHERE id = ' + serviceId)
             .then((query) => {
@@ -253,6 +253,21 @@ function getAppoitmentsFromUserId(userId) {
     })
 }
 
+function createAppointement(serviceId, userId, date, durate){
+    return new Promise((resolve) => {
+        SQLRequest("INSERT INTO appointments (`date`, `durate`, `user_id`, `service_id`) VALUES ('"+ date +"', "+ durate +", "+ userId +", "+ serviceId +")")
+        .then((query)=>{
+            if (query.affectedRows != 0){
+                resolve(true)
+            }else{
+                resolve(false)
+            }
+        }).catch((error) => {
+            resolve({error: true, message: error.message, status: 500})
+        })
+    })
+}
+
 module.exports = {
     getAllUsers,
     getOneUser,
@@ -264,5 +279,7 @@ module.exports = {
     updateUser,
     getServicesFromNameString,
     getServiceByName,
-    getAppoitmentsFromUserId
+    getAppoitmentsFromUserId,
+    createAppointement,
+    getServiceById
 }

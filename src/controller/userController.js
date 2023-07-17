@@ -81,7 +81,6 @@ function registerUser(firstname, lastname, mail, password, phone) {
                     .then((res) => {
                         if (!resolve.error){
                             res.token = createToken(res.userId, 2)
-                            console.log(res)
                             resolve(res)
                         }else{
                             resolve(res)

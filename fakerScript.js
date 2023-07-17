@@ -17,7 +17,6 @@ const faker = new Faker({ locale: [fr] })
 async function SQLRequest(query, params){
 
     return new Promise((resolve, reject)=>{
-        console.log('error', 'results')
         pool.execute(query, params, (error, results)=> {
             if (error){
                 reject(new Error(error));

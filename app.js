@@ -1,4 +1,3 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -17,12 +16,14 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var establishementsRouter = require('./routes/establishements');
 var servicesRouter = require('./routes/services');
+var apointementsRouter = require('./routes/appointements');
 
 app.use(cors())
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/establishments', establishementsRouter);
 app.use('/services', servicesRouter);
+app.use('/appointements', apointementsRouter)
 
 app.listen(8080, function () {
 	console.log('API started on : http://localhost:' + 8080);

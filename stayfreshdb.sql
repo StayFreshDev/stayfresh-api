@@ -48,11 +48,11 @@ DROP TABLE IF EXISTS `appointments`;
 CREATE TABLE IF NOT EXISTS `appointments` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `date` datetime NOT NULL,
-  `durate` datetime NOT NULL,
+  `durate` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `user_id` (`user_id`,`service_id`),
+  KEY `user_id` (`user_id`,`service_id`),
   KEY `service_id` (`service_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

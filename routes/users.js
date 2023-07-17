@@ -121,4 +121,26 @@ router.patch('/modify/:userId', (req, res)=>{
 	})
 })
 
+router.get('/appointements', (req, res)=>{
+	let authorization = req.headers.authorization.split(' ')
+	if (authorization){
+		if (authorization[0] == 'Bearer'){
+			userController.getAppointementsFromToken(authorization[1])
+			.then((response)=>{
+				res.send(response)
+			})
+		}else{
+			res.status(401).send({
+				error: true,
+				message: 'No JWT token submitted'
+			})
+		}
+	}else {
+		res.status(401).send({
+			error: true,
+			message: 'No JWT token submitted'
+		})
+	}
+})
+
 module.exports = router;

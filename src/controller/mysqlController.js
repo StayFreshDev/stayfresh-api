@@ -73,6 +73,7 @@ function getOneEstablishement(id) {
     return new Promise((resolve, reject) => {
         SQLRequest(`
             SELECT
+                e.id,
                 e.name AS establishment_name,
                 e.siret,
                 e.description AS establishment_description,

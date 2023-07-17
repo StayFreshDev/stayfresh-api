@@ -63,9 +63,6 @@ router.post('/login', (req, res) => {
 				}
 				res.status(200).send(responseObject)
 			})
-			.catch((err) => {
-				res.status(500).send(err.message)
-			})
 	}else{
 		res.status(400).send({
 			error: true,

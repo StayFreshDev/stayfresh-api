@@ -2,21 +2,29 @@ const mysqlController = require('./mysqlController')
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 
-function createAppointement(body) {
+function createAppointement(body, token) {
     return new Promise((resolve) => {
-        let date = new Date(body.date)
-        if (date != 'Invalid Date') {
-            mysqlController.createAppointement(body.serviceId, body.userId, dateJSToSQLDate(new Date(body.date)), body.durate)
-                .then((results) => {
-                    resolve(results)
-                })
-        } else {
-            resolve({
-                error: true,
-                status: 400,
-                message: 'Invalid Date'
-            })
-        }
+
+        jwt.verify(token, process.env.SHA_KEY, (err, decoded) => {
+            if (err) {
+                resolve({ error: true, message: 'Invalid JWT token' });
+            } else {
+                console.log(decoded.user_id)
+                let date = new Date(body.date)
+                if (date != 'Invalid Date') {
+                    mysqlController.createAppointement(body.serviceId, decoded.user_id, dateJSToSQLDate(new Date(body.date)), body.durate)
+                        .then((results) => {
+                            resolve(results)
+                        })
+                } else {
+                    resolve({
+                        error: true,
+                        status: 400,
+                        message: 'Invalid Date'
+                    })
+                }
+            }
+        })
     })
 }
 
